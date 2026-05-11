@@ -42,11 +42,9 @@ jobs:
     - name: Start IIS Website
       shell: powershell
       run: |
-        Import-Module WebAdministration
-        $site = Get-Website -Name "starbucks"
-        if ($site.state -ne "Started") {
-            Start-Website -Name "starbucks"
-           }
+         Import-Module WebAdministration
+         Restart-WebAppPool -Name "StarbucksAppPool"
+           
 
     # 5. Verify Deployment
     - name: Verify Site
