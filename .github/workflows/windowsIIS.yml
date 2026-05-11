@@ -54,7 +54,7 @@ jobs:
         # Wait for site to come up
         Start-Sleep -Seconds 10
         try {  
-          $response = Invoke-WebRequest "${{secrets.domainname}}" -UseBasicParsing
+          $response = Invoke-WebRequest "${{secrets.DOMAINNAME}}" -UseBasicParsing
           if ($response.StatusCode -eq 200) {
             Write-Host "Deployment Successful"
           } else {
