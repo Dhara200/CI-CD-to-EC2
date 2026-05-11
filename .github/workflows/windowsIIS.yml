@@ -44,7 +44,7 @@ jobs:
       shell: powershell
       run: |
          Import-Module WebAdministration
-         Start-WebAppPool -Name "starbucks"
+         Start-Website -Name "starbucks"
            
 
     # 5. Verify Deployment
