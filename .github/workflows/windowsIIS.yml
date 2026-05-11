@@ -43,7 +43,10 @@ jobs:
       shell: powershell
       run: |
         Import-Module WebAdministration
-        Start-Website -Name "starbucks"
+        $site = Get-Website -Name "starbucks"
+        if ($site.state -ne "Started") {
+            Start-Website -Name "starbucks"
+           }
 
     # 5. Verify Deployment
     - name: Verify Site
