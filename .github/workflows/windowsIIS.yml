@@ -1,0 +1,61 @@
+name: Deploy HTML to IIS
+
+on:
+  push:
+    branches:
+      - main   # change if needed
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, IIS deploy]   # your Windows runner
+
+    steps:
+
+    # 1. Checkout code
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    # 2. Stop IIS Website (optional but safe)
+    - name: Stop IIS Website
+      shell: powershell
+      run: |
+        Import-Module WebAdministration
+        Stop-Website -Name "starbucks"
+
+    # 3. Copy HTML files to IIS folder
+    - name: Deploy Files to IIS
+      shell: powershell
+      run: |
+        $source = "${{ github.workspace }}"
+        $destination = "C:\inetpub\Starbucks"
+
+        Write-Host "Deploying files from $source to $destination"
+
+        Copy-Item -Path "$source\*" -Destination $destination -Recurse -Force
+
+    # 4. Start IIS Website
+    - name: Start IIS Website
+      shell: powershell
+      run: |
+        Import-Module WebAdministration
+        Start-Website -Name "starbucks"
+
+    # 5. Verify Deployment
+    - name: Verify Site
+      shell: powershell
+      run: |
+        try {
+          $response = Invoke-WebRequest "http://${{IP}}" -UseBasicParsing
+          if ($response.StatusCode -eq 200) {
+            Write-Host "Deployment Successful"
+          } else {
+            throw "Site returned non-200 status"
+          }
+        } catch {
+          Write-Error "Deployment verification failed"
+          exit 1
+        }
+        
+    
+  
+   
