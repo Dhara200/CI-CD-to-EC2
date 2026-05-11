@@ -3,13 +3,15 @@ name: Deploy Website to EC2
 on:
   push:
     branches: [main]
+    paths-ignore: 
+      - '.github/workflows/**'
 
 jobs:
   deploy:
     runs-on: [self-hosted, deploy]
     
     environment:
-        name: UAT
+        name: Production
 
     steps:
       - name: Checkout Code
