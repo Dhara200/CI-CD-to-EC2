@@ -5,12 +5,14 @@ on:
     branches:
       - main   # change if needed
       
-environment:     
-     name: IIS-production
+
 
 jobs:
   deploy:
     runs-on: [self-hosted, IIS deploy]   # your Windows runner
+    
+    environment:     
+        name: IIS-production
 
     steps:
 
