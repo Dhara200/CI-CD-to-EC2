@@ -6,10 +6,10 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: [self-hosted, deploy]
     
     environment:
-        name: production
+        name: UAT
 
     steps:
       - name: Checkout Code
