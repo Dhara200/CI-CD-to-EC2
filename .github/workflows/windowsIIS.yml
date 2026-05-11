@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main   # change if needed
+    paths-ignore: '.github/workflows/**'  
       
 
 
@@ -43,7 +44,7 @@ jobs:
       shell: powershell
       run: |
          Import-Module WebAdministration
-         Restart-WebAppPool -Name "StarbucksAppPool"
+         Start-WebAppPool -Name "starbucks"
            
 
     # 5. Verify Deployment
